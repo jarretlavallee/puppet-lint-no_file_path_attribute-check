@@ -1,0 +1,13 @@
+---
+language: ruby
+sudo: false
+branches:
+bundler_args: --without development system_tests
+script:
+    - bundle exec rake $CHECK
+env:
+    - CHECK=spec
+rvm:
+  - 2.1.9
+  - 2.4.1
+  - 2.5.1
