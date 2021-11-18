@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'puppet-lint-recurse_file-check'
-  s.version     = '0.1.1'
+  s.version     = '0.2.0'
   s.homepage    = 'https://github.com/jarretlavallee/puppet-lint-recurse_file-check'
   s.license     = 'MIT'
   s.author      = 'Jarret Lavallee'
