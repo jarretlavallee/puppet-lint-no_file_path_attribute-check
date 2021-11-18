@@ -19,3 +19,7 @@ end
 group :development do
   gem 'github_changelog_generator', require: false if RUBY_VERSION >= '2.2.2'
 end
+
+if File.file?('Gemfile.local') && File.readable?('Gemfile.local')
+  eval(File.read('Gemfile.local'), binding)
+end

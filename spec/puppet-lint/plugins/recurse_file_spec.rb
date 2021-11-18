@@ -3,17 +3,62 @@
 require 'spec_helper'
 
 describe 'recurse_file' do
-  let(:msg) { 'recurse file resources can cause decreased performance' }
+  let(:msg) { 'Unbounded recurse file resources can cause decreased performance. See "max_files"' }
+  let(:maxfilesmsg) { 'Disabling warnings in recurse file resources using "max_files" is not recommended' }
 
   context 'when recurse is enabled' do
     let(:code) { "file { 'foo': recurse => true }" }
 
-    it 'onlies detect a single problem' do
+    it 'detects a single problem' do
       expect(problems).to have(1).problem
     end
 
     it 'creates a warning' do
       expect(problems).to contain_warning(msg).on_line(1).in_column(26)
+    end
+  end
+
+  context 'when recurse is remote' do
+    let(:code) { "file { 'foo': recurse => 'remote' }" }
+
+    it 'detects a single problem' do
+      expect(problems).to have(1).problem
+    end
+
+    it 'creates a warning' do
+      expect(problems).to contain_warning(msg).on_line(1).in_column(26)
+    end
+  end
+
+  context 'when recurse is enabled with max_files set to a number' do
+    let(:code) { "file { 'foo': recurse => 'remote', max_files => 10 }" }
+
+    it 'does not detect any problems' do
+      expect(problems).to have(0).problem
+    end
+  end
+
+  context 'when recurse is enabled with max_files set to "0"' do
+    let(:code) { "file { 'foo': recurse => 'remote', max_files => 0 }" }
+
+    it 'detects a single problem' do
+      expect(problems).to have(1).problem
+    end
+
+    it 'creates a warning' do
+      expect(problems).to contain_warning(maxfilesmsg).on_line(1).in_column(49)
+    end
+  end
+
+  context 'when recurse is enabled with max_files set to "-1"' do
+    let(:code) { "file { 'foo': recurse => 'remote', max_files => '-1' }" }
+
+    it 'detects a single problem' do
+      expect(problems).to have(1).problem
+    end
+
+    it 'creates a warning' do
+      expect(problems).to contain_warning(maxfilesmsg).on_line(1).in_column(49)
     end
   end
 
