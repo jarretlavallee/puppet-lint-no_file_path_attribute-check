@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 
@@ -7,4 +9,4 @@ RuboCop::RakeTask.new(:rubocop) do |t|
   t.options = ['--display-cop-names']
 end
 
-task :default => :spec
+task default: :spec

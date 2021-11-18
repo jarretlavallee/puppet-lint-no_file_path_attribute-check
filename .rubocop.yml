@@ -1,0 +1,31 @@
+---
+require:
+  - rubocop-rake
+  - rubocop-rspec
+AllCops:
+  NewCops: disable
+  DisplayCopNames: true
+  Include:
+  - "**/*.rb"
+  - "*.gemspec"
+  Exclude:
+  - bin/*
+  - ".vendor/**/*"
+  - "**/Gemfile"
+  - "**/Rakefile"
+  - pkg/**/*
+  - spec/fixtures/**/*
+  - vendor/**/*
+  - "**/Puppetfile"
+  - "**/Vagrantfile"
+  - "**/Guardfile"
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+RSpec/DescribeClass:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Max: 4
